@@ -1,5 +1,10 @@
 {
   "compilerOptions": {
+    "baseUrl": "src",
+    "paths": {
+      "@/*": ["*"], // @/ 로 src 폴더 전체를 참조
+      "@types/*": ["types/*"] // @types 로 src/types 참조
+    },
     "target": "es5",
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
