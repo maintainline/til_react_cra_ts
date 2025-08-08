@@ -9,7 +9,7 @@ type TodoListProps = {
   onEdit: () => void;
 };
 
-const TodoList: ({ todos, onToggle, onDelete, onEdit }: TodoListProps) => JSX.Element = () => {
+const TodoList = ({ todos, onToggle, onDelete, onEdit }: TodoListProps): JSX.Element => {
   return (
     <div>
       <h2>할일목록</h2>
