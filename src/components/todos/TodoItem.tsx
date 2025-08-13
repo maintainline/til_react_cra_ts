@@ -1,14 +1,13 @@
-import { TodoType } from '@/types/todoType';
+import { useTodoActions } from '../../context/todo/hooks';
+import { TodoType } from '../../types/todoType';
 import { KeyboardEvent, useState } from 'react';
 
 type TodoItemProps = {
   todo: TodoType;
-  onToggle: (id: string) => void;
-  onDelete: (id: string) => void;
-  onEdit: (id: string, newTitle: string) => void;
 };
-const TodoItem = ({ todo, onToggle, onDelete, onEdit }: TodoItemProps) => {
+const TodoItem = ({ todo }: TodoItemProps) => {
   //js
+  const { toggleTodo, deleteTodo, editTodo } = useTodoActions();
   // 현재 Edit 상태인지 아닌지 관리
   const [isEdit, setIsEdit] = useState<boolean>(false);
   //Edit 상태라면 입력중인 title 내용 관리
@@ -26,6 +25,7 @@ const TodoItem = ({ todo, onToggle, onDelete, onEdit }: TodoItemProps) => {
       handleEditSave();
     }
     if (e.key === 'Escape') {
+      
       handleEditCancel();
     }
   };
@@ -35,7 +35,7 @@ const TodoItem = ({ todo, onToggle, onDelete, onEdit }: TodoItemProps) => {
     //1. 업데이트 해줌
     if (editTitle.trim()) {
       // 변경되어야 할 id , 새로운 타이틀 전달
-      onEdit(todo.id, editTitle);
+      editTodo(todo.id, editTitle);
       //2. 상태는 isEdit 을 false 로 변경
       setIsEdit(false);
     }
@@ -75,10 +75,10 @@ const TodoItem = ({ todo, onToggle, onDelete, onEdit }: TodoItemProps) => {
         </>
       ) : (
         <>
-          <input type="checkbox" onChange={() => onToggle(todo.id)} checked={todo.completed} />
+          <input type="checkbox" onChange={() => toggleTodo(todo.id)} checked={todo.completed} />
           <span>{todo.title}</span>
           <button onClick={handleEdit}>수정</button>
-          <button onClick={() => onDelete(todo.id)}>삭제</button>
+          <button onClick={() => deleteTodo(todo.id)}>삭제</button>
         </>
       )}
     </li>
