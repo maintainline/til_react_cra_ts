@@ -1,24 +1,24 @@
-import { useState } from 'react';
+import { ChangeEvent, KeyboardEvent, useState } from 'react';
 import { TodoType } from '../../types/todoType';
 import { useTodoActions } from '../../context/todo/hooks';
 
 const TodoWrite = () => {
-  //ts
+  // js 자리
   const { addTodo } = useTodoActions();
-  //1. 할일 제목 값 관리
-  const [title, setTilte] = useState<string>('');
-  // title 변경시 onchange 이벤트 처리해보기
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setTilte(e.target.value);
+  // 할일 제목 값 관리
+  const [title, setTitle] = useState<string>('');
+  // title 변경시 onChange 이벤트 처리해보기
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setTitle(e.target.value);
   };
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    //enter키를 입력시 처리
+  const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
+    // enter 키를 입력시 처리
     if (e.key === 'Enter') {
       handleAdd();
     }
   };
 
-  //2. 새 할일 등록하기
+  // 새 할일 등록하기
   const handleAdd = () => {
     if (title.trim()) {
       const newTodo: TodoType = {
@@ -27,14 +27,25 @@ const TodoWrite = () => {
         completed: false,
       };
       addTodo(newTodo);
-      setTilte('');
+      setTitle('');
     }
   };
-  //jsx
+  // jsx 자리
   return (
-    <div>
-      <input type="text" value={title} onChange={e => handleChange(e)} onKeyDown={handleKeyDown} />
-      <button onClick={handleAdd}>등록</button>
+    <div className="flex items-center gap-2">
+      <input
+        type="text"
+        value={title}
+        onChange={e => handleChange(e)}
+        onKeyDown={handleKeyDown}
+        className="flex-1 rounded-lg border border-neutral-300 bg-white px-3 py-2 outline-none focus:ring-2 focus:ring-brand dark:border-neutral-700 dark:bg-neutral-900"
+      />
+      <button
+        onClick={handleAdd}
+        className="rounded-lg bg-brand px-2 py-2 text-white hover:opacity-90 active:opacity-80"
+      >
+        등록
+      </button>
     </div>
   );
 };
